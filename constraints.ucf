@@ -1,0 +1,29 @@
+#NET "clk" 					LOC = "Y11";
+NET "reset" 				LOC = "P8";
+NET "left"					LOC = "K13";
+NET "right"					LOC = "K14";
+NET "up"						LOC = "J13";
+NET "down"					LOC = "J14";
+
+NET "color_out[0]" 		LOC = "R12";
+NET "color_out[1]" 		LOC = "T12";
+NET "color_out[2]" 		LOC = "R11";
+NET "h_sync" 				LOC = "R9";
+NET "v_sync" 				LOC = "T10";
+
+
+NET "sel[0]"				LOC = "E13";
+NET "sel[1]"				LOC = "F14";
+NET "sel[2]"				LOC = "G14";
+NET "sel[3]"				LOC = "D14";
+
+
+NET "seg_out[0]"			LOC = "E14";
+NET "seg_out[1]"			LOC = "G13";
+NET "seg_out[2]"			LOC = "N15";
+NET "seg_out[3]"			LOC = "P15";
+NET "seg_out[4]"			LOC = "R16";
+NET "seg_out[5]"			LOC = "F13";
+NET "seg_out[6]"			LOC = "N16";
+NET "seg_out[7]"			LOC = "P16";
+
