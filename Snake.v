@@ -9,11 +9,11 @@ module Snake (
 	input down_press,
 	input [9:0] x_pos,
 	input [9:0] y_pos,
-	input add_cube,
+	input inc_len,
 	input [1:0] game_status,
 	input die_flash,
 	output reg [1:0] snake,
-	output reg [6:0] cube_num,
+	output reg [6:0] len,
 	output [5:0] head_x,
 	output [5:0] head_y,
 	output reg hit_body,
@@ -46,7 +46,7 @@ module Snake (
 	assign head_y = cube_y[0];
 	
 	
-	always @( posedge clk )  			//初始化刚开始时我们设定蛇向右运动
+	always @( posedge clk )  			//游戏刚开始时我们设定蛇向右运动
 		if(!reset)
 			direct_r<=RIGHT ;
 		else
@@ -54,7 +54,7 @@ module Snake (
 	
 	always @( posedge clk )
 	begin
-		if(!reset ) begin            //设定初始化后刚开始三个蛇块的位置
+		if(!reset ) begin            //设定初始化后刚开始蛇的位置
 			cnt <= 0;
 			cube_x[0] <= 10;
 			cube_y[0] <= 5;
@@ -232,21 +232,21 @@ module Snake (
 	always @( posedge clk  ) begin
 		if( reset == 0 ) begin
 			is_exist <= 16'b0000000000000111;
-			cube_num <= 3;
+			len <= 3;
 			addcube_state <= 0;		
 		end
 		else begin
 			case( addcube_state )
 			0: begin
-				if( add_cube ) begin
-					cube_num <= cube_num + 1;
-					is_exist[cube_num] <= 1;
+				if( inc_len ) begin
+					len <= len + 1;
+					is_exist[len] <= 1;
 					addcube_state <= 1;
 				end
 			end
 
 			1: begin
-				if(!add_cube)
+				if(!inc_len)
 					addcube_state <= 0;
 			end
 			endcase

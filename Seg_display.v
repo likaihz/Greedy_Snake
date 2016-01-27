@@ -3,9 +3,9 @@
 module Seg_display(
 	input clk,
 	input reset,
-	input add_cube,
-	output reg [7:0] seg_out,
-	output reg [3:0] sel
+	input inc_len,
+	output reg [7:0] SEGMENT,
+	output reg [3:0] AN
 	);
 
 	reg [15:0] point;
@@ -13,79 +13,75 @@ module Seg_display(
 
 	always @( posedge clk ) begin
 		if( !reset  ) begin	
-			seg_out <= 0;
+			SEGMENT <= 0;
 		   clk_cnt <= 0;
-			sel <= 0;
+			AN <= 0;
 		end
 
 		else begin
 			if( clk_cnt <= 200000 ) begin
 				clk_cnt <= clk_cnt + 1;
 				if( clk_cnt == 50000 ) begin
-					sel <= 4'b1110;
+					AN <= 4'b1110;
 					case( point[3:0] )
-					4'b0000:seg_out <= 8'b00000011;
-					4'b0001:seg_out <= 8'b10011111;
-					4'b0010:seg_out <= 8'b00100101;
-					4'b0011:seg_out <= 8'b00001101;
-					4'b0100:seg_out <= 8'b10011001;
-					4'b0101:seg_out <= 8'b01001001;
-					4'b0110:seg_out <= 8'b01000001;
-					4'b0111:seg_out <= 8'b00011111;
-					4'b1000:seg_out <= 8'b00000001;
-					4'b1001:seg_out <= 8'b00001001;
-					default:;
+					4'b0000:SEGMENT <= 8'b00000011;
+					4'b0001:SEGMENT <= 8'b10011111;
+					4'b0010:SEGMENT <= 8'b00100101;
+					4'b0011:SEGMENT <= 8'b00001101;
+					4'b0100:SEGMENT <= 8'b10011001;
+					4'b0101:SEGMENT <= 8'b01001001;
+					4'b0110:SEGMENT <= 8'b01000001;
+					4'b0111:SEGMENT <= 8'b00011111;
+					4'b1000:SEGMENT <= 8'b00000001;
+					4'b1001:SEGMENT <= 8'b00001001;
 					endcase
 				end
 
 				else if( clk_cnt == 100000 ) begin
-					sel <= 4'b1101;				
+					AN <= 4'b1101;				
 					case( point[7:4] )
-					4'b0000:seg_out <= 8'b00000011;
-					4'b0001:seg_out <= 8'b10011111;
-					4'b0010:seg_out <= 8'b00100101;
-					4'b0011:seg_out <= 8'b00001101;
-					4'b0100:seg_out <= 8'b10011001;
-					4'b0101:seg_out <= 8'b01001001;
-					4'b0110:seg_out <= 8'b01000001;
-					4'b0111:seg_out <= 8'b00011111;
-					4'b1000:seg_out <= 8'b00000001;
-					4'b1001:seg_out <= 8'b00001001;
-					default:;		
+					4'b0000:SEGMENT <= 8'b00000011;
+					4'b0001:SEGMENT <= 8'b10011111;
+					4'b0010:SEGMENT <= 8'b00100101;
+					4'b0011:SEGMENT <= 8'b00001101;
+					4'b0100:SEGMENT <= 8'b10011001;
+					4'b0101:SEGMENT <= 8'b01001001;
+					4'b0110:SEGMENT <= 8'b01000001;
+					4'b0111:SEGMENT <= 8'b00011111;
+					4'b1000:SEGMENT <= 8'b00000001;
+					4'b1001:SEGMENT <= 8'b00001001;	
 					endcase 
 				end
 
 				else if( clk_cnt == 150000 ) begin
-					sel <= 4'b1011;
+					AN <= 4'b1011;
 					case( point[11:8] )
-					4'b0000:seg_out <= 8'b00000011;
-					4'b0001:seg_out <= 8'b10011111;
-					4'b0010:seg_out <= 8'b00100101;
-					4'b0011:seg_out <= 8'b00001101;
-					4'b0100:seg_out <= 8'b10011001;
-					4'b0101:seg_out <= 8'b01001001;
-					4'b0110:seg_out <= 8'b01000001;
-					4'b0111:seg_out <= 8'b00011111;
-					4'b1000:seg_out <= 8'b00000001;
-					4'b1001:seg_out <= 8'b00001001;
-					default:;
+					4'b0000:SEGMENT <= 8'b00000011;
+					4'b0001:SEGMENT <= 8'b10011111;
+					4'b0010:SEGMENT <= 8'b00100101;
+					4'b0011:SEGMENT <= 8'b00001101;
+					4'b0100:SEGMENT <= 8'b10011001;
+					4'b0101:SEGMENT <= 8'b01001001;
+					4'b0110:SEGMENT <= 8'b01000001;
+					4'b0111:SEGMENT <= 8'b00011111;
+					4'b1000:SEGMENT <= 8'b00000001;
+					4'b1001:SEGMENT <= 8'b00001001;
 					endcase 
 				end
 
 				else if( clk_cnt == 200000 ) begin
-					sel <= 4'b0111;
+					AN <= 4'b0111;
 		   		case( point[15:12] )
-					4'b0000:seg_out <= 8'b00000011;
-					4'b0001:seg_out <= 8'b10011111;
-					4'b0010:seg_out <= 8'b00100101;
-					4'b0011:seg_out <= 8'b00001101;
-					4'b0100:seg_out <= 8'b10011001;
-					4'b0101:seg_out <= 8'b01001001;
-					4'b0110:seg_out <= 8'b01000001;
-					4'b0111:seg_out <= 8'b00011111;
-					4'b1000:seg_out <= 8'b00000001;
-					4'b1001:seg_out <= 8'b00001001;
-					default:;
+					4'b0000:SEGMENT <= 8'b00000011;
+					4'b0001:SEGMENT <= 8'b10011111;
+					4'b0010:SEGMENT <= 8'b00100101;
+					4'b0011:SEGMENT <= 8'b00001101;
+					4'b0100:SEGMENT <= 8'b10011001;
+					4'b0101:SEGMENT <= 8'b01001001;
+					4'b0110:SEGMENT <= 8'b01000001;
+					4'b0111:SEGMENT <= 8'b00011111;
+					4'b1000:SEGMENT <= 8'b00000001;
+					4'b1001:SEGMENT <= 8'b00001001;
 					endcase
 				end
 			end
@@ -95,17 +91,17 @@ module Seg_display(
 		end 
 	end
 
-	reg addcube_state;
+	reg inclen_state;
 	always @( posedge clk  ) begin
 		if( reset == 0 ) begin
 			point <= 0;
-			addcube_state <= 0;
+			inclen_state <= 0;
 		end
 
 		else begin
-			case( addcube_state )
+			case( inclen_state )
 			0: begin
-				if( add_cube ) begin	
+				if( inc_len ) begin	
 					if( point[3:0] < 9 )
 						point[3:0] <= point[3:0] + 1;
 						
@@ -125,14 +121,14 @@ module Seg_display(
 						end
 					end
 					
-					addcube_state <= 1;
+					inclen_state <= 1;
 				end
 			end
 		
 
 			1: begin
-				if(!add_cube)
-					addcube_state <= 0;
+				if(!inc_len)
+					inclen_state <= 0;
 			end
 			endcase
 		end

@@ -1,24 +1,5 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:    04:57:44 01/12/2016 
-// Design Name: 
-// Module Name:    VGA_control 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
-module VGA_control (
+module VGA_display (
 	input clk,
 	input reset,
 	input [1:0] snake,
@@ -28,7 +9,7 @@ module VGA_control (
 	output reg [9:0] y_pos,
 	output reg h_sync,
 	output reg v_sync,
-	output reg [2:0] color_out
+	output reg [2:0] RGB
 	);
 	
 	reg [19:0] clk_cnt;
@@ -99,26 +80,26 @@ module VGA_control (
 				
 				if( x_pos[9:4] == apple_x && y_pos[9:4] == apple_y )
 						case( {loy, lox} )
-						8'b0000_0000: color_out = 3'b000;
-						default:color_out = 3'b001;
+						8'b0000_0000: RGB = 3'b000;
+						default:RGB = 3'b001;
 						endcase
 						
 				else if( snake == NONE )
-						color_out = 3'b000;
+						RGB = 3'b000;
 						
 				else if( snake == WALL )
-						color_out = 3'b101;
+						RGB = 3'b101;
 						
 				else if( snake == HEAD | snake == BODY ) begin	
 					case( {lox, loy} )
-					8'b0000_0000: color_out = 3'b000;
-					default:color_out = ( snake == HEAD ) ? HEAD_COLOR: BODY_COLOR;
+					8'b0000_0000: RGB = 3'b000;
+					default:RGB = ( snake == HEAD ) ? HEAD_COLOR: BODY_COLOR;
 					endcase
 				end
 			end
 
 			else 
-				color_out = 3'b000;
+				RGB = 3'b000;
 		end
 	end	  
 endmodule

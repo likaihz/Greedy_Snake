@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 
-module Snake_eating_apple (
+module Eating_apple (
 	input clk,
 	input reset,
 	input [5:0] head_x,
 	input [5:0] head_y,
 	output reg [5:0] apple_x,
 	output reg [4:0] apple_y,
-	output reg add_cube
+	output reg inc_len
 );
 
 	reg [31:0] clk_cnt;
@@ -21,7 +21,7 @@ module Snake_eating_apple (
 			clk_cnt <= 0;
 			apple_x <= 24;
 			apple_y <= 10;
-			add_cube <= 0;
+			inc_len <= 0;
 		end
 
 		else begin
@@ -29,12 +29,12 @@ module Snake_eating_apple (
 			if( clk_cnt == 250000 ) begin
 				clk_cnt <= 0;
 				if( apple_x == head_x && apple_y == head_y ) begin
-					add_cube <= 1;
+					inc_len <= 1;
 					apple_x <= ( random_num[10:5] > 38 ) ? ( random_num[10:5] - 25 ) :( random_num[10:5] == 0 ) ? 1:random_num[10:5];
 					apple_y <= ( random_num[4:0] > 28 ) ? ( random_num[4:0] - 3 ) :( random_num[4:0] == 0 ) ? 1 : random_num[4:0];
 				end
 				else 
-					add_cube <= 0;
+					inc_len <= 0;
 			end
 		end
 	end

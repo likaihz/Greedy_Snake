@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Game_ctrl_unit(
+module Ctrl_unit(
 	input clk,
 	input reset,
 	input key1_press,

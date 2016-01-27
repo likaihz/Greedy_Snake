@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module Greedy_Snake(
-   input clk_50mhz,
+   input clk,
 	input reset,
 	input left,
 	input right,
@@ -9,9 +9,9 @@ module Greedy_Snake(
 	input down,
 	output h_sync,
 	output v_sync,
-	output [2:0] color_out,
-	output [7:0] seg_out,
-	output [3:0] sel
+	output [2:0] RGB,
+	output [7:0] SEGMENT,
+	output [3:0] AN
 	);
 
 
@@ -23,15 +23,15 @@ module Greedy_Snake(
 	wire [4:0] apple_y;
 	wire [5:0] head_x;
 	wire [5:0] head_y;
-	wire add_cube;
+	wire inc_len;
 	wire [1:0] game_status;
 	wire hit_wall;
 	wire hit_body;
 	wire die_flash;
 	wire restart;
-	wire [6:0] cube_num;
+	wire [6:0] len;
 
-	Game_ctrl_unit game_ctrl_unit1(
+	Ctrl_unit ctrl_unit(
 		.clk(clk),
 		.reset(reset),
 		.key1_press(left_key_press),
@@ -45,17 +45,7 @@ module Greedy_Snake(
 		.restart(restart)
 	);
 	
-	Snake_eating_apple snake_eating_apple1(
-		.clk(clk),
-		.reset(reset),
-		.apple_x(apple_x),
-		.apple_y(apple_y),
-		.head_x(head_x),
-		.head_y(head_y),
-		.add_cube(add_cube)
-	);
-
-	Snake snake0(
+	Snake _snake(
 		.clk(clk),
 		.reset(reset),
 		.left_press(left_key_press),
@@ -67,29 +57,25 @@ module Greedy_Snake(
 		.y_pos(y_pos),
 		.head_x(head_x),
 		.head_y(head_y),
-		.add_cube(add_cube),
+		.inc_len(inc_len),
 		.game_status(game_status),
-		.cube_num(cube_num),
+		.len(len),
 		.hit_body(hit_body),
 		.hit_wall(hit_wall),
 		.die_flash(die_flash)
 		);
 	
-	VGA_control  vga_control(
+	Eating_apple eating_apple(
 		.clk(clk),
 		.reset(reset),
-		.h_sync(h_sync),
-		.v_sync(v_sync), 
-		.snake(snake),
-		.color_out(color_out),
-		.x_pos(x_pos), 
-		.y_pos(y_pos),
 		.apple_x(apple_x),
-		.apple_y(apple_y)
+		.apple_y(apple_y),
+		.head_x(head_x),
+		.head_y(head_y),
+		.inc_len(inc_len)
 	);
 
-
-	Key key1(
+	Key key(
 		.clk(clk),
 		.reset(reset),.left(left),
 		.right(right),
@@ -101,13 +87,29 @@ module Greedy_Snake(
 		.down_key_press(down_key_press)
 	);
 
-	Seg_display Seg_display1
+	
+	VGA_display  vga_display(
+		.clk(clk),
+		.reset(reset),
+		.h_sync(h_sync),
+		.v_sync(v_sync), 
+		.snake(snake),
+		.RGB(RGB),
+		.x_pos(x_pos), 
+		.y_pos(y_pos),
+		.apple_x(apple_x),
+		.apple_y(apple_y)
+	);
+
+
+	
+	Seg_display seg_display
 	(
 		.clk(clk),
 		.reset(reset),
-		.add_cube(add_cube),
-		.seg_out(seg_out),
-		.sel(sel)
+		.inc_len(inc_len),
+		.SEGMENT(SEGMENT),
+		.AN(AN)
 	);
 
 endmodule
